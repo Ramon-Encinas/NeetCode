@@ -61,11 +61,98 @@ function App() {
   const arr = [1, 2, 3, 4, 5];
   let length = 5;
 
-  staticArray.removeMiddle(arr, 2, length);
-  length--; // Reduce the length manually after the operation
+  staticArray.insertMiddle(arr, 2, 10, length);
+  length++; // Manually increase length after insertion
 
-  console.log(arr);
-  console.log(length);
+  // console.log(arr);
+  // console.log(length);
+
+  // initialize myArray
+  let myArray = [1, 3, 5];
+
+  // access an arbitrary element, where i is the index of the desired value
+  const printElement = (i: number) => {
+    return myArray[i];
+  };
+  printElement(0);
+  // prints 1
+
+  const resetCount = () => {
+    setCount(0);
+  };
+
+  // Reassign myArray to a new array
+  myArray = [2, 3, 5];
+
+  const printArray = () => {
+    for (let i = 0; i < myArray.length; i++) {
+      console.log(myArray[i]);
+    }
+  };
+
+  printArray(); // prints 2, 3 and 5 separately
+
+  // Alternatively, you can use a while loop:
+
+  // let i = 0;
+  // while (i < myArray.length) {
+  //   console.log(myArray[i]);
+  //   i++;
+  // }
+
+  console.log("removes last index value and prints it", myArray.pop()); // prints 50
+
+  myArray.pop(); // removes 40
+
+  myArray = [10, 20, 30, 40, 50];
+
+  const removeMiddle = (arr: number[], i: number, length: number) => {
+    // Shift starting from i + 1 to end.
+    for (let index = i + 1; index < length; index++) {
+      arr[index - 1] = arr[index];
+    }
+    // No need to 'remove' arr[i], since we already shifted
+  };
+  removeMiddle(myArray, 2, myArray.length); // removes 30
+
+  const insertEnd = (
+    arr: number[],
+    n: number,
+    length: number,
+    capacity: number
+  ) => {
+    if (length < capacity) {
+      arr[length] = n;
+    }
+  };
+
+  console.log(
+    "trying to add more that it is allocated",
+    insertEnd(myArray, 60, myArray.length, 5)
+  ); // inserts 60 at the end
+
+  myArray = [10, 20, 30, 40, 50];
+
+  // Insert n into index i after shifting elements to the right.
+  // Assuming i is a valid index and arr is not full.
+  const insertMiddle = (
+    arr: number[],
+    i: number,
+    n: number,
+    length: number
+  ) => {
+    // Shift starting from the end to i.
+    for (let index = length - 1; index > i - 1; index--) {
+      arr[index + 1] = arr[index];
+    }
+    //Insert at i
+    arr[i] = n;
+  };
+
+  console.log(
+    "inserts 25 at index 2",
+    insertMiddle(myArray, 2, 25, myArray.length)
+  ); // inserts 25 at index 2
 
   return (
     <>
@@ -82,13 +169,12 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+        <button onClick={resetCount}>Reset Count</button>
         <p>
           Edit <code>src/App.tsx</code> and save to test HMR
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p className="read-the-docs">{printElement(3)}</p>
     </>
   );
 }
